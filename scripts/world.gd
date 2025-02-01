@@ -80,7 +80,7 @@ func _on_join_button_pressed() -> void:
 	menu_music.stop()
 
 	# Using the manually entered address from the input field
-	var host_address = address_entry.text
+	var host_address: String = address_entry.text
 	if host_address == "":
 		print("Please enter the host address.")
 		return
