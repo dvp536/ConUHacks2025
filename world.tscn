@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://b57uspbprxc8"]
+[gd_scene load_steps=31 format=3 uid="uid://b57uspbprxc8"]
 
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_ho7yh"]
 [ext_resource type="PackedScene" uid="uid://bd3ai1v40ssao" path="res://map.tscn" id="3_fd0sg"]
@@ -10,9 +10,10 @@
 [ext_resource type="Script" path="res://scripts/ui/menu/options/mouse_sensitivity.gd" id="6_00vww"]
 [ext_resource type="Script" path="res://scripts/ui/menu/options/back.gd" id="6_2hany"]
 [ext_resource type="Script" path="res://scripts/ui/menu/options_button.gd" id="6_7g7sm"]
-[ext_resource type="Script" path="res://scripts/ui/menu/pause/resume.gd" id="7_5cdyw"]
+[ext_resource type="Script" path="res://textures/kenney_particle_pack/resume.gd" id="7_5cdyw"]
 [ext_resource type="Script" path="res://scripts/ui/menu/options/controller_sensitivity.gd" id="7_jhf7u"]
 [ext_resource type="Script" path="res://scripts/ui/menu/pause/quit.gd" id="9_ucmny"]
+[ext_resource type="Texture2D" uid="uid://bgklmfdyr46we" path="res://imports/Images/MenuBackground.jpg" id="12_e6nrb"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_r06yd"]
 energy_multiplier = 1.25
@@ -77,6 +78,29 @@ shader_parameter/color_over = null
 
 [sub_resource type="Theme" id="Theme_utqnk"]
 
+[sub_resource type="SystemFont" id="SystemFont_646io"]
+font_names = PackedStringArray("Impact")
+
+[sub_resource type="SystemFont" id="SystemFont_jbnoj"]
+font_names = PackedStringArray("Impact")
+
+[sub_resource type="SystemFont" id="SystemFont_o1uwk"]
+font_names = PackedStringArray("Impact")
+font_italic = true
+oversampling = 2.1
+
+[sub_resource type="SystemFont" id="SystemFont_yxgyo"]
+font_names = PackedStringArray("Impact")
+
+[sub_resource type="SystemFont" id="SystemFont_q4ll2"]
+font_names = PackedStringArray("Impact")
+
+[sub_resource type="SystemFont" id="SystemFont_ote55"]
+font_names = PackedStringArray("Impact")
+
+[sub_resource type="SystemFont" id="SystemFont_oena7"]
+font_names = PackedStringArray("Impact")
+
 [node name="World" type="Node"]
 script = ExtResource("1_ho7yh")
 
@@ -128,7 +152,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="DollyCamera" type="Camera3D" parent="Menu"]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0.702964, 13.2434)
+transform = Transform3D(-1, 0, 8.74228e-08, 3.24314e-09, 0.999312, 0.0370972, -8.73626e-08, 0.0370972, -0.999312, 0, 0.702964, 13.2434)
 
 [node name="Options" type="PanelContainer" parent="Menu"]
 unique_name_in_owner = true
@@ -270,11 +294,22 @@ text = "Quit"
 script = ExtResource("9_ucmny")
 
 [node name="MainMenu" type="PanelContainer" parent="Menu"]
-anchors_preset = 9
-anchor_bottom = 1.0
-offset_right = 391.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -204.5
+offset_top = -188.0
+offset_right = 204.5
+offset_bottom = 188.0
+grow_horizontal = 2
 grow_vertical = 2
-theme = SubResource("Theme_utqnk")
+
+[node name="TextureRect" type="TextureRect" parent="Menu/MainMenu"]
+layout_mode = 2
+texture = ExtResource("12_e6nrb")
+expand_mode = 3
 
 [node name="MarginContainer" type="MarginContainer" parent="Menu/MainMenu"]
 layout_mode = 2
@@ -289,13 +324,24 @@ size_flags_vertical = 4
 theme_override_constants/separation = 10
 
 [node name="MainMenuLabel" type="Label" parent="Menu/MainMenu/MarginContainer/VBoxContainer"]
+modulate = Color(1, 0.848333, 0.74, 1)
 layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/shadow_offset_x = 8
+theme_override_constants/shadow_offset_y = 8
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = SubResource("SystemFont_646io")
+theme_override_font_sizes/font_size = 23
 text = "Main Menu"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="HostButton" type="Button" parent="Menu/MainMenu/MarginContainer/VBoxContainer"]
+modulate = Color(0.941176, 0.415686, 0.0509804, 1)
 layout_mode = 2
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = SubResource("SystemFont_jbnoj")
+theme_override_font_sizes/font_size = 17
 text = "Host"
 script = ExtResource("4_nuahp")
 
@@ -304,31 +350,53 @@ layout_mode = 2
 
 [node name="AddressEntry" type="LineEdit" parent="Menu/MainMenu/MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
+modulate = Color(0.941176, 0.415686, 0.0509804, 1)
 layout_mode = 2
 size_flags_horizontal = 3
-placeholder_text = "Enter Address Here to join"
+theme_override_constants/outline_size = 20
+theme_override_constants/caret_width = 0
+theme_override_fonts/font = SubResource("SystemFont_o1uwk")
+theme_override_font_sizes/font_size = 17
+placeholder_text = "Lobby's address:"
 alignment = 1
+flat = true
 
 [node name="JoinButton" type="Button" parent="Menu/MainMenu/MarginContainer/VBoxContainer/HBoxContainer"]
+modulate = Color(0.941176, 0.415686, 0.0509804, 1)
 layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = SubResource("SystemFont_yxgyo")
+theme_override_font_sizes/font_size = 15
 text = "  Join  "
 
 [node name="OptionsButton" type="Button" parent="Menu/MainMenu/MarginContainer/VBoxContainer"]
+modulate = Color(0.941176, 0.415686, 0.0509804, 1)
 layout_mode = 2
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = SubResource("SystemFont_q4ll2")
+theme_override_font_sizes/font_size = 16
 toggle_mode = true
 text = "Options"
 script = ExtResource("6_7g7sm")
 
 [node name="Quit" type="Button" parent="Menu/MainMenu/MarginContainer/VBoxContainer"]
+modulate = Color(1, 0.848333, 0.74, 1)
 layout_mode = 2
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = SubResource("SystemFont_ote55")
+theme_override_font_sizes/font_size = 17
 text = "Quit"
 script = ExtResource("9_ucmny")
 
 [node name="MusicToggle" type="CheckButton" parent="Menu/MainMenu"]
 unique_name_in_owner = true
+modulate = Color(1, 0.848333, 0.74, 1)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = SubResource("SystemFont_oena7")
 button_pressed = true
 text = "Music"
 
