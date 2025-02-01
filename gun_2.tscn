@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bxoj7sjdolnau"]
+
+[ext_resource type="Script" path="res://gun_2.gd" id="1_fua3f"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_mccvu"]
+size = Vector3(0.1, 0.1, 1)
+
+[node name="Gun2" type="MeshInstance3D"]
+mesh = SubResource("BoxMesh_mccvu")
+script = ExtResource("1_fua3f")
