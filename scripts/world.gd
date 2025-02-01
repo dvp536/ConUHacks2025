@@ -13,6 +13,7 @@ var paused: bool = false
 var options: bool = false
 var controller: bool = false
 
+# Main Menu Button Handlers
 func _unhandled_input(event: InputEvent) -> void:
 	if Input.is_action_pressed("pause") and !main_menu.visible and !options_menu.visible:
 		paused = !paused
@@ -52,7 +53,7 @@ func _on_back_pressed() -> void:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		options = false
 
-#func _ready() -> void:
+# Hosting the game (server side)
 func _on_host_button_pressed() -> void:
 	main_menu.hide()
 	$Menu/DollyCamera.hide()
@@ -69,16 +70,25 @@ func _on_host_button_pressed() -> void:
 
 	add_player(multiplayer.get_unique_id())
 
-	upnp_setup()
+	# No UPnP required, manual port forwarding
+	print("Hosting game on port %d. Players can connect using your IP address." % PORT)
 
+# Joining the game (client side)
 func _on_join_button_pressed() -> void:
 	main_menu.hide()
 	$Menu/Blur.hide()
 	menu_music.stop()
+
+	# Using the manually entered address from the input field
+	var host_address = address_entry.text
+	if host_address == "":
+		print("Please enter the host address.")
+		return
 	
-	enet_peer.create_client(address_entry.text, PORT)
+	enet_peer.create_client(host_address, PORT)
 	if options_menu.visible:
 		options_menu.hide()
+
 	multiplayer.multiplayer_peer = enet_peer
 
 func _on_options_button_toggled(toggled_on: bool) -> void:
@@ -93,6 +103,7 @@ func _on_music_toggle_toggled(toggled_on: bool) -> void:
 	else:
 		menu_music.play()
 
+# Adding and removing players
 func add_player(peer_id: int) -> void:
 	var player: Node = Player.instantiate()
 	player.name = str(peer_id)
@@ -102,15 +113,3 @@ func remove_player(peer_id: int) -> void:
 	var player: Node = get_node_or_null(str(peer_id))
 	if player:
 		player.queue_free()
-
-func upnp_setup() -> void:
-	var upnp: UPNP = UPNP.new()
-
-	upnp.discover()
-	upnp.add_port_mapping(PORT)
-
-	var ip: String = upnp.query_external_address()
-	if ip == "":
-		print("Failed to establish upnp connection!")
-	else:
-		print("Success! Join Address: %s" % upnp.query_external_address())
