@@ -130,11 +130,14 @@ func play_shoot_effects() -> void:
 	muzzle_flash.restart()
 	muzzle_flash.emitting = true
 
+var death_count: int = 0  # Tracks player deaths
+
 @rpc("any_peer")
 func recieve_damage(damage: int = 1) -> void:
 	health -= damage
 	if health <= 0:
-		health = 2
+		death_count += 1  # Increment death count
+		health = 4
 		position = spawns[randi() % spawns.size()]
 
 		# Automatically switch weapons after a kill
@@ -142,6 +145,7 @@ func recieve_damage(damage: int = 1) -> void:
 		switch_weapon(current_weapon)
 
 		print("Killed an enemy! Switching to weapon:", current_weapon)
+		print("Death count:", death_count)  # Display death count
 
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
