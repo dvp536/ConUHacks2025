@@ -12,7 +12,6 @@ extends CharacterBody3D
 @onready var gun3 = $Camera3D/pistol
 
 ## Character positions
-@onready var holding_gun : Node3D = $Camera3D/pistol/HoldingHandGunStickman
 @onready var shooting_gun : Node3D = $Camera3D/pistol/ShootHandGunStickman
 @onready var return_timer: Timer = Timer.new()  # Create a new Timer node dynamically
 
@@ -24,7 +23,7 @@ var sensitivity: float = 0.005
 var controller_sensitivity: float = 0.010
 
 const SPEED = 5.5
-const JUMP_VELOCITY = 4.5
+const JUMP_VELOCITY = 5
 
 ## Health and Respawn
 @export var health: int = 2
@@ -53,12 +52,10 @@ func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	camera.current = true
 	position = spawns[randi() % spawns.size()]
-	switch_weapon(current_weapon)  # Initialize weapon selection
-	holding_gun.visible = true
-	shooting_gun.visible = false
+	switch_weapon(current_weapon) 
+	shooting_gun.visible = true
 	return_timer.wait_time = 3.0  # 3 seconds delay
 	return_timer.one_shot = true  # Only triggers once per activation
-	return_timer.timeout.connect(switch_to_hold_position)  # Call function on timeout
 	add_child(return_timer)  # Add the timer to the scene
 	
 	if ui_label:
@@ -106,7 +103,6 @@ func _input(event):
 		switch_weapon(current_weapon)
 
 	if Input.is_action_just_pressed("shoot"):
-		switch_to_shoot_position()
 		gunshot_sound.play()
 		play_shoot_effects.rpc()
 		if raycast.is_colliding() and str(raycast.get_collider()).contains("CharacterBody3D"):
@@ -188,7 +184,7 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "shoot":
 		anim_player.play("idle")
 
-func switch_weapon(weapon_id: int) -> void:
+func switch_weapon(weapon_id: int) -> void:	
 	"""
 	Switches between the available weapons.
 	"""
@@ -200,16 +196,6 @@ func switch_weapon(weapon_id: int) -> void:
 	anim_player.play("equip") if anim_player.has_animation("equip") else null
 
 	print("Switched to weapon:", current_weapon)
-
-func switch_to_shoot_position():
-	if holding_gun and shooting_gun :
-		holding_gun.visible = false
-		shooting_gun.visible = true
-
-func switch_to_hold_position():
-	if holding_gun and shooting_gun :
-		holding_gun.visible = true
-		shooting_gun.visible = false
 
 
 func update_ui() -> void:

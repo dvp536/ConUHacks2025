@@ -1,8 +1,7 @@
-[gd_scene load_steps=23 format=3 uid="uid://b2qhxdrnviyqf"]
+[gd_scene load_steps=22 format=3 uid="uid://b2qhxdrnviyqf"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_8tdgl"]
 [ext_resource type="PackedScene" uid="uid://cutckskghm3gy" path="res://imports/pistol.glb" id="2_0s6en"]
-[ext_resource type="PackedScene" uid="uid://w7afu6jplola" path="res://imports/models/characters/HoldingHandGunStickman.blend" id="3_afi4e"]
 [ext_resource type="Texture2D" uid="uid://ctosmto80mu2s" path="res://textures/kenney_particle_pack/star_05.png" id="3_ep0ec"]
 [ext_resource type="AudioStream" uid="uid://bevvvtb8n4qfc" path="res://audio/645317__darkshroom__m9_noisegate-1780.ogg" id="3_pilvn"]
 [ext_resource type="Texture2D" uid="uid://duu4nryr7idps" path="res://textures/kenney_particle_pack/circle_05.png" id="4_ssmal"]
@@ -165,20 +164,21 @@ collision_layer = 2
 script = ExtResource("1_8tdgl")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(0.405842, 0, 0, 0, 0.778644, 0, 0, 0, 0.214596, 0.49127, 0.798301, 0)
+transform = Transform3D(0.405842, 0, 0, 0, 0.778644, 0, 0, 0, 0.214596, 0.436076, 0.921808, 0.00151742)
 shape = SubResource("CapsuleShape3D_kk8xf")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.341943, 1.6, 0)
 fov = 61.0
 near = 0.012
 far = 4004.3
 
+[node name="RayCast3D" type="RayCast3D" parent="Camera3D"]
+target_position = Vector3(0, 0, -50)
+collision_mask = 3
+
 [node name="pistol" parent="Camera3D" instance=ExtResource("2_0s6en")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.25, -0.5)
-
-[node name="HoldingHandGunStickman" parent="Camera3D/pistol" instance=ExtResource("3_afi4e")]
-transform = Transform3D(-0.0520945, 0, 0.295442, 0, 0.3, 0, -0.295442, 0, -0.0520945, 0.005, -1.312, 0.53)
 
 [node name="ShootHandGunStickman" parent="Camera3D/pistol" instance=ExtResource("4_sy68s")]
 transform = Transform3D(-0.0520945, 0, 0.295442, 0, 0.3, 0, -0.295442, 0, -0.0520945, 0.005, -1.312, 0.53)
@@ -201,10 +201,6 @@ draw_pass_1 = SubResource("PlaneMesh_fbvoh")
 [node name="Gun1" parent="Camera3D/pistol" instance=ExtResource("5_1loga")]
 
 [node name="Gun2" parent="Camera3D/pistol" instance=ExtResource("6_mvdy8")]
-
-[node name="RayCast3D" type="RayCast3D" parent="Camera3D"]
-target_position = Vector3(0, 0, -50)
-collision_mask = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
