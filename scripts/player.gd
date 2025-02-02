@@ -16,6 +16,9 @@ extends CharacterBody3D
 @onready var shooting_gun : Node3D = $Camera3D/pistol/ShootHandGunStickman
 @onready var return_timer: Timer = Timer.new()  # Create a new Timer node dynamically
 
+## UI Labels
+@onready var ui_label: Label = $DeathKillLabel  # Ensure you have a CanvasLayer with a Label named "DeathKillLabel"
+
 var current_weapon = 1  # Default to Gun1
 var sensitivity: float = 0.005
 var controller_sensitivity: float = 0.010
@@ -37,6 +40,9 @@ const JUMP_VELOCITY = 4.5
 
 var axis_vector: Vector2
 var mouse_captured: bool = true
+
+var death_count: int = 0  # Tracks player deaths
+var kill_count: int = 0   # Tracks player kills
 	
 func _enter_tree() -> void:
 	set_multiplayer_authority(str(name).to_int())
@@ -54,6 +60,14 @@ func _ready() -> void:
 	return_timer.one_shot = true  # Only triggers once per activation
 	return_timer.timeout.connect(switch_to_hold_position)  # Call function on timeout
 	add_child(return_timer)  # Add the timer to the scene
+	
+	if ui_label:
+		ui_label.anchor_right = 1.0
+		ui_label.anchor_left = 1.0
+		ui_label.anchor_top = 0.0
+		ui_label.anchor_bottom = 0.0
+		ui_label.position = Vector2(1000, 0)
+	update_ui()  # Update UI at start
 
 func _process(_delta: float) -> void:
 	sensitivity = Global.sensitivity
@@ -90,9 +104,6 @@ func _input(event):
 			current_weapon = 3 if current_weapon == 1 else current_weapon - 1  # Cycle 3 → 2 → 1 → 3
 		
 		switch_weapon(current_weapon)
-
-
-
 
 	if Input.is_action_just_pressed("shoot"):
 		switch_to_shoot_position()
@@ -145,24 +156,34 @@ func play_shoot_effects() -> void:
 	muzzle_flash.restart()
 	muzzle_flash.emitting = true
 
-var death_count: int = 0  # Tracks player deaths
-
 @rpc("any_peer")
-func recieve_damage(damage: int = 1) -> void:
+func recieve_damage(damage: int = 1, attacker_id: int = -1) -> void:
 	health -= damage
 	if health <= 0:
 		death_count += 1  # Increment death count
 		health = 4
 		position = spawns[randi() % spawns.size()]
 
-		# Automatically switch weapons after a kill
+		# Automatically switch weapons after death
 		current_weapon = (current_weapon % 2) + 1  # Cycles between Gun1 and Gun2
 		switch_weapon(current_weapon)
 
-		print("Killed an enemy! Switching to weapon:", current_weapon)
+		print("You died! Respawning...")
 		print("Death count:", death_count)  # Display death count
 
+		update_ui()  # Update the UI when player dies
 
+		# If the attacker_id is valid, notify them of the kill
+		if attacker_id != -1 and attacker_id != get_multiplayer_authority():
+			rpc_id(attacker_id, "register_kill")
+
+@rpc("any_peer")
+func register_kill() -> void:
+	kill_count += 1  # Increment kill count
+	print("You killed an enemy! Total kills:", kill_count)
+
+	update_ui()  # Update the UI when player gets a kill
+	
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "shoot":
 		anim_player.play("idle")
@@ -189,3 +210,8 @@ func switch_to_hold_position():
 	if holding_gun and shooting_gun :
 		holding_gun.visible = true
 		shooting_gun.visible = false
+
+
+func update_ui() -> void:
+	if ui_label:
+		ui_label.text = "Deaths: %d | Kills: %d" % [death_count, kill_count]
