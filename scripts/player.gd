@@ -57,13 +57,12 @@ func _ready() -> void:
 	return_timer.wait_time = 3.0  # 3 seconds delay
 	return_timer.one_shot = true  # Only triggers once per activation
 	add_child(return_timer)  # Add the timer to the scene
-	
 	if ui_label:
 		ui_label.anchor_right = 1.0
 		ui_label.anchor_left = 1.0
 		ui_label.anchor_top = 0.0
 		ui_label.anchor_bottom = 0.0
-		ui_label.position = Vector2(1000, 0)
+		ui_label.position = Vector2(1050, 0)
 	update_ui()  # Update UI at start
 
 func _process(_delta: float) -> void:
@@ -157,7 +156,7 @@ func recieve_damage(damage: int = 1, attacker_id: int = -1) -> void:
 	health -= damage
 	if health <= 0:
 		death_count += 1  # Increment death count
-		health = 4
+		health = 2
 		position = spawns[randi() % spawns.size()]
 
 		# Automatically switch weapons after death
@@ -169,16 +168,6 @@ func recieve_damage(damage: int = 1, attacker_id: int = -1) -> void:
 
 		update_ui()  # Update the UI when player dies
 
-		# If the attacker_id is valid, notify them of the kill
-		if attacker_id != -1 and attacker_id != get_multiplayer_authority():
-			rpc_id(attacker_id, "register_kill")
-
-@rpc("any_peer")
-func register_kill() -> void:
-	kill_count += 1  # Increment kill count
-	print("You killed an enemy! Total kills:", kill_count)
-
-	update_ui()  # Update the UI when player gets a kill
 	
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "shoot":
@@ -200,4 +189,4 @@ func switch_weapon(weapon_id: int) -> void:
 
 func update_ui() -> void:
 	if ui_label:
-		ui_label.text = "Deaths: %d | Kills: %d | Kills: %d" % [death_count, kill_count, health]
+		ui_label.text = "Deaths: %d" % [death_count]
