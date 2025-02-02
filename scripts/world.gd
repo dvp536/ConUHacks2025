@@ -5,6 +5,8 @@ extends Node
 @onready var pause_menu: PanelContainer = $Menu/PauseMenu
 @onready var address_entry: LineEdit = %AddressEntry
 @onready var menu_music: AudioStreamPlayer = %MenuMusic
+@onready var match_timer: Timer = $MatchTimer  # Timer node
+@onready var timer_label: Label = $MatchTimerLabel  # Timer label node
 
 const Player = preload("res://player.tscn")
 const PORT = 9999
@@ -13,7 +15,65 @@ var paused: bool = false
 var options: bool = false
 var controller: bool = false
 
-# Main Menu Button Handlers
+func _ready():
+	# Set the match timer properties
+	match_timer.wait_time = 180  # 2 minutes match duration (static number)
+	match_timer.one_shot = true  # Timer will run only once
+
+	# Start the timer
+	match_timer.start()
+
+	# Connect the timeout signal to the handler function
+	match_timer.timeout.connect(_on_match_timer_timeout)
+
+	# Center the timer label on the screen (using static values for screen size and label size)
+	var screen_width = 1280  # Static screen width (replace with your desired number)
+	var screen_height = 720  # Static screen height (replace with your desired number)
+	var label_width = 200    # Static label width (replace with your desired number)
+	var label_height = 50    # Static label height (replace with your desired number)
+
+	# Calculate the position of the label
+	var label_position = Vector2((screen_width - label_width) / 2, 0)
+	timer_label.position = label_position
+
+
+
+func _process(_delta: float) -> void:
+	if paused:
+		$Menu/Blur.show()
+		pause_menu.show()
+		if !controller:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	update_timer_label()  # Keep updating the timer display
+
+func update_timer_label():
+	if timer_label:  # Check if timer_label is not null
+		var time_left = int(match_timer.time_left)
+		var minutes = time_left / 60
+		var seconds = time_left % 60
+		timer_label.text = "Time Left: %02d:%02d" % [minutes, seconds]
+	else:
+		print("timer_label is null!")
+
+func _on_match_timer_timeout():
+	timer_label.text = "Match Over!"
+	end_match()
+
+func end_match():
+	print("Match has ended!")
+	
+	# Freeze gameplay
+	get_tree().paused = true
+	
+	# Play the menu music
+	menu_music.play()
+	
+	# Reposition the timer label to center-center
+	var screen_size = get_viewport().get_visible_rect().size
+	var label_size = timer_label.get_minimum_size()
+	timer_label.position = (screen_size - label_size) / 2
+
+# Handling pause input
 func _unhandled_input(event: InputEvent) -> void:
 	if Input.is_action_pressed("pause") and !main_menu.visible and !options_menu.visible:
 		paused = !paused
@@ -22,13 +82,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event is InputEventMouseMotion:
 		controller = false
 
-func _process(_delta: float) -> void:
-	if paused:
-		$Menu/Blur.show()
-		pause_menu.show()
-		if !controller:
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-
 func _on_resume_pressed() -> void:
 	if !options:
 		$Menu/Blur.hide()
@@ -36,20 +89,20 @@ func _on_resume_pressed() -> void:
 	if !controller:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	paused = false
-	
+
 func _on_options_pressed() -> void:
 	_on_resume_pressed()
 	$Menu/Options.show()
 	$Menu/Blur.show()
 	%Fullscreen.grab_focus()
-	if !controller:
+	if not controller:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	options = true
 
 func _on_back_pressed() -> void:
 	if options:
 		$Menu/Blur.hide()
-		if !controller:
+		if not controller:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		options = false
 
@@ -70,7 +123,6 @@ func _on_host_button_pressed() -> void:
 
 	add_player(multiplayer.get_unique_id())
 
-	# No UPnP required, manual port forwarding
 	print("Hosting game on port %d. Players can connect using your IP address." % PORT)
 
 # Joining the game (client side)
@@ -79,12 +131,11 @@ func _on_join_button_pressed() -> void:
 	$Menu/Blur.hide()
 	menu_music.stop()
 
-	# Using the manually entered address from the input field
 	var host_address: String = address_entry.text
 	if host_address == "":
 		print("Please enter the host address.")
 		return
-	
+
 	enet_peer.create_client(host_address, PORT)
 	if options_menu.visible:
 		options_menu.hide()
@@ -96,7 +147,7 @@ func _on_options_button_toggled(toggled_on: bool) -> void:
 		options_menu.show()
 	else:
 		options_menu.hide()
-		
+
 func _on_music_toggle_toggled(toggled_on: bool) -> void:
 	if !toggled_on:
 		menu_music.stop()
