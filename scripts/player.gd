@@ -11,6 +11,10 @@ extends CharacterBody3D
 @onready var gun2 = $Camera3D/pistol/Gun2
 @onready var gun3 = $Camera3D/pistol
 
+## Character positions
+@onready var holding_gun : Node3D = $Camera3D/pistol/HoldingHandGunStickman
+@onready var shooting_gun : Node3D = $Camera3D/pistol/ShootHandGunStickman
+@onready var return_timer: Timer = Timer.new()  # Create a new Timer node dynamically
 
 var current_weapon = 1  # Default to Gun1
 var sensitivity: float = 0.005
@@ -41,6 +45,12 @@ func _ready() -> void:
 	camera.current = true
 	position = spawns[randi() % spawns.size()]
 	switch_weapon(current_weapon)  # Initialize weapon selection
+	holding_gun.visible = true
+	shooting_gun.visible = false
+	return_timer.wait_time = 3.0  # 3 seconds delay
+	return_timer.one_shot = true  # Only triggers once per activation
+	return_timer.timeout.connect(switch_to_hold_position)  # Call function on timeout
+	add_child(return_timer)  # Add the timer to the scene
 
 func _process(_delta: float) -> void:
 	sensitivity = Global.sensitivity
@@ -81,13 +91,15 @@ func _input(event):
 
 
 
-	if Input.is_action_just_pressed("shoot") and anim_player.current_animation != "shoot":
-		play_shoot_effects.rpc()
+	if Input.is_action_just_pressed("shoot"):
+		switch_to_shoot_position()
 		gunshot_sound.play()
+		play_shoot_effects.rpc()
 		if raycast.is_colliding() and str(raycast.get_collider()).contains("CharacterBody3D"):
 			var hit_player: Object = raycast.get_collider()
 			hit_player.recieve_damage.rpc_id(hit_player.get_multiplayer_authority())
-
+		# Restart the timer every time we shoot (delays returning to hold position)
+		return_timer.start()
 	if Input.is_action_just_pressed("respawn"):
 		recieve_damage(2)
 
@@ -164,3 +176,13 @@ func switch_weapon(weapon_id: int) -> void:
 	anim_player.play("equip") if anim_player.has_animation("equip") else null
 
 	print("Switched to weapon:", current_weapon)
+
+func switch_to_shoot_position():
+	if holding_gun and shooting_gun :
+		holding_gun.visible = false
+		shooting_gun.visible = true
+
+func switch_to_hold_position():
+	if holding_gun and shooting_gun :
+		holding_gun.visible = true
+		shooting_gun.visible = false

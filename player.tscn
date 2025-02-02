@@ -1,15 +1,15 @@
-[gd_scene load_steps=22 format=3 uid="uid://b2qhxdrnviyqf"]
+[gd_scene load_steps=23 format=3 uid="uid://b2qhxdrnviyqf"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_8tdgl"]
 [ext_resource type="PackedScene" uid="uid://cutckskghm3gy" path="res://imports/pistol.glb" id="2_0s6en"]
+[ext_resource type="PackedScene" uid="uid://w7afu6jplola" path="res://imports/models/characters/HoldingHandGunStickman.blend" id="3_afi4e"]
 [ext_resource type="Texture2D" uid="uid://ctosmto80mu2s" path="res://textures/kenney_particle_pack/star_05.png" id="3_ep0ec"]
 [ext_resource type="AudioStream" uid="uid://bevvvtb8n4qfc" path="res://audio/645317__darkshroom__m9_noisegate-1780.ogg" id="3_pilvn"]
 [ext_resource type="Texture2D" uid="uid://duu4nryr7idps" path="res://textures/kenney_particle_pack/circle_05.png" id="4_ssmal"]
-[ext_resource type="PackedScene" path="res://gun_1.tscn" id="5_1loga"]
+[ext_resource type="PackedScene" uid="uid://bmqmrmymxfapu" path="res://imports/models/characters/ShootHandGunStickman.blend" id="4_sy68s"]
+[ext_resource type="PackedScene" uid="uid://cndnon0c7ogq0" path="res://gun_1.tscn" id="5_1loga"]
 [ext_resource type="Script" path="res://scripts/ui/crosshair.gd" id="5_fnci2"]
-[ext_resource type="PackedScene" path="res://gun_2.tscn" id="6_mvdy8"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_7800j"]
+[ext_resource type="PackedScene" uid="uid://bxoj7sjdolnau" path="res://gun_2.tscn" id="6_mvdy8"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kk8xf"]
 
@@ -164,10 +164,6 @@ properties/2/replication_mode = 1
 collision_layer = 2
 script = ExtResource("1_8tdgl")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-mesh = SubResource("CapsuleMesh_7800j")
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_kk8xf")
@@ -180,6 +176,12 @@ far = 4004.3
 
 [node name="pistol" parent="Camera3D" instance=ExtResource("2_0s6en")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.25, -0.5)
+
+[node name="HoldingHandGunStickman" parent="Camera3D/pistol" instance=ExtResource("3_afi4e")]
+transform = Transform3D(-0.0520945, 0, 0.295442, 0, 0.3, 0, -0.295442, 0, -0.0520945, 0.005, -1.312, 0.53)
+
+[node name="ShootHandGunStickman" parent="Camera3D/pistol" instance=ExtResource("4_sy68s")]
+transform = Transform3D(-0.0520945, 0, 0.295442, 0, 0.3, 0, -0.295442, 0, -0.0520945, 0.005, -1.312, 0.53)
 
 [node name="GunshotSound" type="AudioStreamPlayer3D" parent="Camera3D/pistol"]
 unique_name_in_owner = true
@@ -226,5 +228,4 @@ stretch_mode = 5
 script = ExtResource("5_fnci2")
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
-[connection signal="child_order_changed" from="MeshInstance3D" to="." method="_on_mesh_instance_3d_child_order_changed"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
