@@ -6,9 +6,9 @@
 [ext_resource type="AudioStream" uid="uid://bevvvtb8n4qfc" path="res://audio/645317__darkshroom__m9_noisegate-1780.ogg" id="3_pilvn"]
 [ext_resource type="Texture2D" uid="uid://duu4nryr7idps" path="res://textures/kenney_particle_pack/circle_05.png" id="4_ssmal"]
 [ext_resource type="PackedScene" uid="uid://bmqmrmymxfapu" path="res://imports/models/characters/ShootHandGunStickman.blend" id="4_sy68s"]
-[ext_resource type="PackedScene" uid="uid://cndnon0c7ogq0" path="res://gun_1.tscn" id="5_1loga"]
+[ext_resource type="PackedScene" path="res://gun_1.tscn" id="5_1loga"]
 [ext_resource type="Script" path="res://scripts/ui/crosshair.gd" id="5_fnci2"]
-[ext_resource type="PackedScene" uid="uid://bxoj7sjdolnau" path="res://gun_2.tscn" id="6_mvdy8"]
+[ext_resource type="PackedScene" path="res://gun_2.tscn" id="6_mvdy8"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kk8xf"]
 
