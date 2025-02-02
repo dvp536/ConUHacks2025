@@ -37,7 +37,7 @@ const JUMP_VELOCITY = 4.5
 
 var axis_vector: Vector2
 var mouse_captured: bool = true
-
+	
 func _enter_tree() -> void:
 	set_multiplayer_authority(str(name).to_int())
 
