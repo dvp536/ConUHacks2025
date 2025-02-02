@@ -107,7 +107,7 @@ func _input(event):
 		play_shoot_effects.rpc()
 		if raycast.is_colliding() and str(raycast.get_collider()).contains("CharacterBody3D"):
 			var hit_player: Object = raycast.get_collider()
-			hit_player.recieve_damage.rpc_id(hit_player.get_multiplayer_authority())
+			hit_player.recieve_damage.rpc_id(hit_player.get_multiplayer_authority(), 1, get_multiplayer_authority())
 		# Restart the timer every time we shoot (delays returning to hold position)
 		return_timer.start()
 	if Input.is_action_just_pressed("respawn"):
@@ -200,4 +200,4 @@ func switch_weapon(weapon_id: int) -> void:
 
 func update_ui() -> void:
 	if ui_label:
-		ui_label.text = "Deaths: %d | Kills: %d" % [death_count, kill_count]
+		ui_label.text = "Deaths: %d | Kills: %d | Kills: %d" % [death_count, kill_count, health]
