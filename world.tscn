@@ -1,8 +1,4 @@
-<<<<<<< Updated upstream
-[gd_scene load_steps=32 format=3 uid="uid://b57uspbprxc8"]
-=======
-[gd_scene load_steps=43 format=3 uid="uid://b57uspbprxc8"]
->>>>>>> Stashed changes
+[gd_scene load_steps=44 format=3 uid="uid://b57uspbprxc8"]
 
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_ho7yh"]
 [ext_resource type="PackedScene" uid="uid://bd3ai1v40ssao" path="res://map.tscn" id="3_fd0sg"]
@@ -17,12 +13,8 @@
 [ext_resource type="Script" path="res://textures/kenney_particle_pack/resume.gd" id="7_5cdyw"]
 [ext_resource type="Script" path="res://scripts/ui/menu/options/controller_sensitivity.gd" id="7_jhf7u"]
 [ext_resource type="Script" path="res://scripts/ui/menu/pause/quit.gd" id="9_ucmny"]
-<<<<<<< Updated upstream
-[ext_resource type="Texture2D" uid="uid://bgklmfdyr46we" path="res://imports/Images/MenuBackground.jpg" id="12_e6nrb"]
+[ext_resource type="Texture2D" uid="uid://drfk6nf14r5c7" path="res://imports/Images/output-onlinepngtools (1).png" id="12_p35ek"]
 [ext_resource type="Script" path="res://match_timer.gd" id="15_bmgrk"]
-=======
-[ext_resource type="Texture2D" uid="uid://drfk6nf14r5c7" path="res://imports/Images/output-onlinepngtools (1).png" id="12_nlu12"]
->>>>>>> Stashed changes
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_r06yd"]
 energy_multiplier = 1.25
@@ -87,40 +79,40 @@ shader_parameter/color_over = null
 
 [sub_resource type="Theme" id="Theme_utqnk"]
 
-[sub_resource type="SystemFont" id="SystemFont_mp268"]
+[sub_resource type="SystemFont" id="SystemFont_xpok1"]
 font_names = PackedStringArray("Impact")
 
-[sub_resource type="SystemFont" id="SystemFont_3qyju"]
+[sub_resource type="SystemFont" id="SystemFont_c7o5m"]
 font_names = PackedStringArray("Impact")
 
-[sub_resource type="SystemFont" id="SystemFont_7o4o8"]
+[sub_resource type="SystemFont" id="SystemFont_jrp27"]
 font_names = PackedStringArray("Impact")
 
-[sub_resource type="SystemFont" id="SystemFont_qetnr"]
+[sub_resource type="SystemFont" id="SystemFont_6xklj"]
 font_names = PackedStringArray("Impact")
 
-[sub_resource type="SystemFont" id="SystemFont_3ntqe"]
+[sub_resource type="SystemFont" id="SystemFont_23qgp"]
 font_names = PackedStringArray("Impact")
 
-[sub_resource type="SystemFont" id="SystemFont_mmfit"]
+[sub_resource type="SystemFont" id="SystemFont_q18ek"]
 font_names = PackedStringArray("Impact")
 
-[sub_resource type="SystemFont" id="SystemFont_lou0o"]
+[sub_resource type="SystemFont" id="SystemFont_8ibrr"]
 font_names = PackedStringArray("Impact")
 
-[sub_resource type="SystemFont" id="SystemFont_owxas"]
+[sub_resource type="SystemFont" id="SystemFont_831he"]
 font_names = PackedStringArray("Impact")
 
-[sub_resource type="SystemFont" id="SystemFont_hxgt0"]
+[sub_resource type="SystemFont" id="SystemFont_h1p2c"]
 font_names = PackedStringArray("Impact")
 
-[sub_resource type="SystemFont" id="SystemFont_tlr21"]
+[sub_resource type="SystemFont" id="SystemFont_yuedp"]
 font_names = PackedStringArray("Impact")
 
-[sub_resource type="SystemFont" id="SystemFont_g2sue"]
+[sub_resource type="SystemFont" id="SystemFont_kmqeu"]
 font_names = PackedStringArray("Impact")
 
-[sub_resource type="SystemFont" id="SystemFont_xtqbf"]
+[sub_resource type="SystemFont" id="SystemFont_uvd40"]
 font_names = PackedStringArray("Impact")
 
 [sub_resource type="SystemFont" id="SystemFont_646io"]
@@ -202,15 +194,14 @@ transform = Transform3D(-1, 0, 8.74228e-08, 3.24314e-09, 0.999312, 0.0370972, -8
 [node name="Options" type="PanelContainer" parent="Menu"]
 unique_name_in_owner = true
 visible = false
-anchors_preset = 8
+anchors_preset = 13
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
+anchor_bottom = 1.0
 offset_left = 274.0
-offset_top = -158.0
-offset_right = 544.0
-offset_bottom = 158.0
+offset_top = 170.0
+offset_right = 574.0
+offset_bottom = -162.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_utqnk")
@@ -231,34 +222,35 @@ theme_override_constants/separation = 10
 layout_mode = 2
 theme_override_constants/shadow_offset_x = 8
 theme_override_constants/shadow_offset_y = 8
-theme_override_constants/outline_size = 12
-theme_override_fonts/font = SubResource("SystemFont_mp268")
-theme_override_font_sizes/font_size = 16
+theme_override_constants/outline_size = 15
+theme_override_fonts/font = SubResource("SystemFont_xpok1")
+theme_override_font_sizes/font_size = 18
 text = "Options
 "
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Fullscreen" type="CheckButton" parent="Menu/Options/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/outline_size = 12
-theme_override_fonts/font = SubResource("SystemFont_3qyju")
-theme_override_font_sizes/font_size = 16
+theme_override_fonts/font = SubResource("SystemFont_c7o5m")
+theme_override_font_sizes/font_size = 17
 text = "Fullscreen"
 script = ExtResource("5_abwkb")
 
 [node name="FpsCounter" type="CheckButton" parent="Menu/Options/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/outline_size = 12
-theme_override_fonts/font = SubResource("SystemFont_7o4o8")
-theme_override_font_sizes/font_size = 16
+theme_override_fonts/font = SubResource("SystemFont_jrp27")
+theme_override_font_sizes/font_size = 17
 text = "FPS counter"
 
 [node name="Ping" type="CheckButton" parent="Menu/Options/MarginContainer/VBoxContainer"]
 layout_mode = 2
 tooltip_text = "Shows connection trip time to host (in milliseconds)"
 theme_override_constants/outline_size = 12
-theme_override_fonts/font = SubResource("SystemFont_qetnr")
+theme_override_fonts/font = SubResource("SystemFont_6xklj")
 theme_override_font_sizes/font_size = 16
 text = "View Ping"
 
@@ -266,9 +258,9 @@ text = "View Ping"
 layout_mode = 2
 theme_override_constants/shadow_offset_x = 8
 theme_override_constants/shadow_offset_y = 8
-theme_override_constants/outline_size = 12
-theme_override_fonts/font = SubResource("SystemFont_3ntqe")
-theme_override_font_sizes/font_size = 16
+theme_override_constants/outline_size = 15
+theme_override_fonts/font = SubResource("SystemFont_23qgp")
+theme_override_font_sizes/font_size = 18
 text = "Sensitivity"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -282,7 +274,7 @@ size_flags_horizontal = 3
 theme_override_constants/shadow_offset_x = 8
 theme_override_constants/shadow_offset_y = 8
 theme_override_constants/outline_size = 12
-theme_override_fonts/font = SubResource("SystemFont_mmfit")
+theme_override_fonts/font = SubResource("SystemFont_q18ek")
 theme_override_font_sizes/font_size = 16
 text = "Mouse sensitivity"
 
@@ -305,7 +297,7 @@ size_flags_horizontal = 3
 theme_override_constants/shadow_offset_x = 8
 theme_override_constants/shadow_offset_y = 8
 theme_override_constants/outline_size = 12
-theme_override_fonts/font = SubResource("SystemFont_lou0o")
+theme_override_fonts/font = SubResource("SystemFont_8ibrr")
 theme_override_font_sizes/font_size = 16
 text = "Controller sensitivity"
 
@@ -321,23 +313,22 @@ script = ExtResource("7_jhf7u")
 
 [node name="Back" type="Button" parent="Menu/Options/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/outline_size = 18
-theme_override_fonts/font = SubResource("SystemFont_owxas")
+theme_override_constants/outline_size = 15
+theme_override_fonts/font = SubResource("SystemFont_831he")
 theme_override_font_sizes/font_size = 18
 text = "Back"
 script = ExtResource("6_2hany")
 
 [node name="PauseMenu" type="PanelContainer" parent="Menu"]
 visible = false
-anchors_preset = 8
+anchors_preset = 13
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -126.0
-offset_top = -88.0
-offset_right = 174.0
-offset_bottom = 112.0
+anchor_bottom = 1.0
+offset_left = -180.0
+offset_top = 160.0
+offset_right = 170.0
+offset_bottom = -258.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -355,10 +346,10 @@ theme_override_constants/separation = 10
 
 [node name="PauseLabel" type="Label" parent="Menu/PauseMenu/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/shadow_offset_x = 9
-theme_override_constants/shadow_offset_y = 9
-theme_override_constants/outline_size = 15
-theme_override_fonts/font = SubResource("SystemFont_hxgt0")
+theme_override_constants/shadow_offset_x = 12
+theme_override_constants/shadow_offset_y = 12
+theme_override_constants/outline_size = 18
+theme_override_fonts/font = SubResource("SystemFont_h1p2c")
 theme_override_font_sizes/font_size = 18
 text = "Pause Menu
 "
@@ -367,24 +358,24 @@ vertical_alignment = 1
 
 [node name="Resume" type="Button" parent="Menu/PauseMenu/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = SubResource("SystemFont_tlr21")
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = SubResource("SystemFont_yuedp")
 theme_override_font_sizes/font_size = 16
 text = "Resume"
 script = ExtResource("7_5cdyw")
 
 [node name="Options" type="Button" parent="Menu/PauseMenu/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = SubResource("SystemFont_g2sue")
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = SubResource("SystemFont_kmqeu")
 theme_override_font_sizes/font_size = 16
 text = "Options
 "
 
 [node name="Quit" type="Button" parent="Menu/PauseMenu/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = SubResource("SystemFont_xtqbf")
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = SubResource("SystemFont_uvd40")
 theme_override_font_sizes/font_size = 16
 text = "Quit"
 script = ExtResource("9_ucmny")
@@ -404,7 +395,7 @@ grow_vertical = 2
 
 [node name="TextureRect" type="TextureRect" parent="Menu/MainMenu"]
 layout_mode = 2
-texture = ExtResource("12_nlu12")
+texture = ExtResource("12_p35ek")
 expand_mode = 3
 
 [node name="MarginContainer" type="MarginContainer" parent="Menu/MainMenu"]
@@ -420,7 +411,7 @@ size_flags_vertical = 4
 theme_override_constants/separation = 10
 
 [node name="MainMenuLabel" type="Label" parent="Menu/MainMenu/MarginContainer/VBoxContainer"]
-modulate = Color(0.69, 0.468625, 0.3105, 1)
+modulate = Color(1, 0.848333, 0.74, 1)
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_constants/shadow_offset_x = 8
@@ -446,7 +437,7 @@ layout_mode = 2
 
 [node name="AddressEntry" type="LineEdit" parent="Menu/MainMenu/MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
-modulate = Color(1, 0.6625, 0.19, 1)
+modulate = Color(0.94, 0.657217, 0.047, 1)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/outline_size = 20
@@ -464,6 +455,7 @@ size_flags_vertical = 0
 theme_override_constants/outline_size = 20
 theme_override_fonts/font = SubResource("SystemFont_yxgyo")
 theme_override_font_sizes/font_size = 15
+toggle_mode = true
 text = "  Join  "
 
 [node name="OptionsButton" type="Button" parent="Menu/MainMenu/MarginContainer/VBoxContainer"]
@@ -477,7 +469,7 @@ text = "Options"
 script = ExtResource("6_7g7sm")
 
 [node name="Quit" type="Button" parent="Menu/MainMenu/MarginContainer/VBoxContainer"]
-modulate = Color(0.69, 0.468625, 0.3105, 1)
+modulate = Color(1, 0.848333, 0.74, 1)
 layout_mode = 2
 theme_override_constants/outline_size = 20
 theme_override_fonts/font = SubResource("SystemFont_ote55")
